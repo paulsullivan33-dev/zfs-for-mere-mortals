@@ -1,0 +1,83 @@
+ZFS lab notes — what was run, what was learned, what could not be run
+====================================================================
+
+WHERE
+--------------------------------------------------------------------
+The build sandbox for this guide: Ubuntu 24.04.5 LTS, kernel
+7.0.0-39-generic (a custom host kernel), running as root.
+Host-reported date of the lab: 2026-10-24 (sandbox clock).
+
+THE PLAN
+--------------------------------------------------------------------
+Install zfsutils-linux, load the module, and rehearse the
+guide end to end on a file-backed practice pool exactly as
+chapter 4 describes it: three sparse 1G files, a mirror of
+two, datasets, a snapshot, a send.
+
+WHAT ACTUALLY HAPPENED, IN ORDER
+--------------------------------------------------------------------
+1. The package archive was fine: apt-cache policy (transcript
+   t00) shows zfsutils-linux and zfs-dkms both at OpenZFS
+   2.2.2-0ubuntu9.5 for Ubuntu noble — the versions the guide
+   quotes were read off the real archive, not remembered.
+
+2. The straightforward install could not complete, for a
+   reason that had nothing to do with ZFS: the sandbox's
+   shared package state was mid-transition by another task
+   (a fuse/fuse3 conflict left a package
+   unpacked-but-unconfigured), and apt refused to proceed
+   (transcript t01a). Rather than repair a package state
+   that was not ours to repair, the lab verified the
+   userspace directly: the very .debs named above were
+   downloaded and unpacked into a scratch directory, and
+   their own binaries were run from there. The binaries in
+   the transcripts are the distribution's genuine packages;
+   only the dpkg bookkeeping was skipped.
+
+3. The tools run, and identify themselves (transcript t01):
+   `zpool --version` and `zfs --version` both report
+   zfs-2.2.2-0ubuntu9.5, prefixed by the userspace's own
+   warning that the kernel side is missing. The full --help
+   surfaces (transcript t02) were captured and checked
+   against the chapters — the command sets the guide uses
+   (create, snapshot, clone, bookmark, send/receive, scrub,
+   replace, events, wait) are all present in this version.
+
+4. The wall arrived exactly where chapter 3 predicts it
+   (transcript t03): /dev/zfs does not exist, and
+   `modprobe zfs` answers "Module zfs not found in directory
+   /lib/modules/7.0.0-39-generic". The sandbox's custom
+   kernel ships no ZFS module and the environment cannot
+   load kernel code; even /proc/modules is unavailable.
+
+5. The practice pool was attempted anyway, on the record
+   (transcript t04): three 1G files created as chapter 4
+   directs, then `zpool create -f practice ...` — refused
+   with OpenZFS's own words: "The ZFS modules cannot be
+   auto-loaded. Try running 'modprobe zfs' as root to
+   manually load them." Chapter 13 quotes this refusal
+   because the lab produced it.
+
+THE VERIFICATION CEILING (also in criteria.md)
+--------------------------------------------------------------------
+LIVE, on a real OpenZFS 2.2.2 userspace:
+  * package identity and versions from the Ubuntu archive
+  * zpool/zfs --version and complete --help command surfaces
+  * the tools' exact behaviour when the module is missing
+
+DOCUMENTED-ONLY, written from the OpenZFS documentation and
+man pages, NOT executed anywhere in this lab:
+  * creating, importing, exporting or destroying pools
+  * datasets, properties, quotas
+  * snapshots, clones, rollback, holds
+  * send/receive, bookmarks, replication
+  * scrubs, device replacement, resilvering
+  * ZED and all monitoring of a live pool
+
+Every command in chapters 4-11 should be read with that
+division in mind: the syntax was cross-checked against the
+installed tools' help and the 2.2 man pages; the behaviour
+was not observed. On your own hardware — a real machine or
+a full VM, where the module loads — the chapters can be
+followed directly, and chapter 4's practice pool is the
+rehearsal to do first.

@@ -1,0 +1,27 @@
+site_name: ZFS for Mere Mortals
+site_description: Plain language storage that checks itself. Pools and vdevs, datasets and properties, snapshots you can roll back to, send and receive replication, scrubs that quietly repair damage, replacing a disk without drama, and the habits that keep a home server pool boring for years.
+site_url: https://paulsullivan33-dev.github.io/zfs-for-mere-mortals/
+
+# Guides live at the repo root (nice for GitHub browsing).
+# The deploy workflow copies them into docs/ before building.
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - What ZFS Is: what-zfs-is.md
+  - The Moving Parts: the-moving-parts.md
+  - Installing ZFS: installing-zfs.md
+  - Your First Pool: your-first-pool.md
+  - Datasets and Properties: datasets-and-properties.md
+  - Snapshots, Clones and Rollback: snapshots-clones-and-rollback.md
+  - Sending and Receiving: sending-and-receiving.md
+  - Scrubs, Repair and Replacing a Disk: scrubs-repair-and-replacing-a-disk.md
+  - Watching the Pool: watching-the-pool.md
+  - Backup and Recovery: backup-and-recovery.md
+  - Recipes: recipes.md
+  - The Neighbours: the-neighbours.md
+  - Limits: limits.md
+  - Troubleshooting: troubleshooting.md
+  - Glossary: glossary.md
+  - Writing Criteria: criteria.md

@@ -1,0 +1,44 @@
+A pool plan on paper — the page chapter 4 asks for
+====================================================================
+Fill one of these in BEFORE running zpool create. The point
+is not the form; it is that the decisions are made slowly,
+in writing, rather than quickly at a prompt.
+
+POOL NAME:        tank
+
+THE DATA:         family photos, documents, media library,
+                  backups of the household machines
+THE PAIN:         losing the photos is the unacceptable
+                  outcome; media can be re-ripped, slowly
+
+DISKS (from /dev/disk/by-id/, serials copied off the labels):
+  bay 1:  ata-...<model>-<serial-1>      4 TB   bought 2024
+  bay 2:  ata-...<model>-<serial-2>      4 TB   bought 2024
+  bay 3:  empty (the growth slot)
+  bay 4:  empty
+
+SHAPE:            one mirror vdev (bay 1 + bay 2)
+                  survives: either disk dying
+                  usable:   about half the raw 8 TB
+WHY NOT RAIDZ:    with two disks there is nothing to
+                  RAIDZ with; the mirror is also the shape
+                  that grows by swapping disks two at a time
+
+AT CREATION:      ashift=12, compression=lz4, atime=off,
+                  xattr=sa, mountpoint=/tank
+
+DATASETS:
+  tank/photos     the irreplaceable stuff
+  tank/documents  small, precious
+  tank/media      recordsize=1M, short snapshot life
+  tank/backups    quota per machine under it
+  tank/scratch    sync=disabled, no tears shed
+
+SNAPSHOTS:        automated (chapter 10): hourly x 24,
+                  daily x 7, weekly x 4
+SCRUBS:           monthly, first Sunday, and read the result
+REPLICATION:      nightly send/receive to the second
+                  machine's backup pool (chapter 10)
+
+WHEN A DISK DIES: the map is this page. Bay and serial are
+                  written above; chapter 8 is the procedure.

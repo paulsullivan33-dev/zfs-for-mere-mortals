@@ -1,0 +1,15 @@
+$ truncate -s 1G ~/zfs-practice/disk1 disk2 disk3
+total 0
+-rw-rw---- 1 root nogroup 1.0G Oct 24 04:24 disk1
+-rw-rw---- 1 root nogroup 1.0G Oct 24 04:24 disk2
+-rw-rw---- 1 root nogroup 1.0G Oct 24 04:24 disk3
+
+$ zpool create -f practice $HOME/zfs-practice/disk1 $HOME/zfs-practice/disk2
+The ZFS modules cannot be auto-loaded.
+Try running 'modprobe zfs' as root to manually load them.
+exit=1
+
+$ zpool list
+The ZFS modules cannot be auto-loaded.
+Try running 'modprobe zfs' as root to manually load them.
+exit=1

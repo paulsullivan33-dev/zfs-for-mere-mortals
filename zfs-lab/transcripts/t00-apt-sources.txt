@@ -1,0 +1,19 @@
+$ apt-cache policy zfsutils-linux zfs-dkms
+zfsutils-linux:
+  Installed: (none)
+  Candidate: 2.2.2-0ubuntu9.5
+  Version table:
+     2.2.2-0ubuntu9.5 500
+        500 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages
+        500 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages
+     2.2.2-0ubuntu9 500
+        500 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 Packages
+zfs-dkms:
+  Installed: (none)
+  Candidate: 2.2.2-0ubuntu9.5
+  Version table:
+     2.2.2-0ubuntu9.5 500
+        500 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages
+        500 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages
+     2.2.2-0ubuntu9 500
+        500 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 Packages

@@ -1,0 +1,14 @@
+$ uname -a
+Linux htch-runtime 7.0.0-39-generic #1 SMP PREEMPT_DYNAMIC Thu Sep 24 08:42:15 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+
+$ ls -l /dev/zfs
+ls: cannot access '/dev/zfs': No such file or directory
+
+$ modprobe zfs
+modprobe: FATAL: Module zfs not found in directory /lib/modules/7.0.0-39-generic
+exit=1
+
+$ lsmod | grep -i zfs
+libkmod: ERROR ../libkmod/libkmod-module.c:1762 kmod_module_new_from_loaded: could not open /proc/modules: No such file or directory
+Error: could not get list of modules: No such file or directory
+exit=1

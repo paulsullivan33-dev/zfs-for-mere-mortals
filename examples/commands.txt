@@ -1,0 +1,84 @@
+ZFS — the distilled commands
+====================================================================
+Placeholders: <disk-id> means a name from /dev/disk/by-id/
+(the long entry carrying the model and serial). Chapter 4
+explains why IDs, never sda-style letters.
+
+INSTALL AND PROVE (chapter 3)
+--------------------------------------------------------------------
+  sudo apt update
+  sudo apt install zfsutils-linux
+  sudo modprobe zfs
+  zpool version            # tools AND kernel module named
+  lsmod | grep zfs
+
+PRACTICE POOL, MADE OF FILES (chapter 4)
+--------------------------------------------------------------------
+  mkdir -p ~/zfs-practice && cd ~/zfs-practice
+  truncate -s 1G disk1 disk2 disk3
+  sudo zpool create -f practice \
+    $HOME/zfs-practice/disk1 $HOME/zfs-practice/disk2
+  zpool status practice
+  zfs list
+  sudo zpool destroy practice    # when practice is over
+
+REAL POOL (chapter 4) — read the IDs aloud first
+--------------------------------------------------------------------
+  ls -l /dev/disk/by-id/
+  sudo zpool create \
+    -o ashift=12 \
+    -O compression=lz4 -O atime=off -O xattr=sa \
+    -O mountpoint=/tank \
+    tank mirror /dev/disk/by-id/<disk-id-1> \
+                /dev/disk/by-id/<disk-id-2>
+
+DATASETS AND PROPERTIES (chapter 5)
+--------------------------------------------------------------------
+  sudo zfs create tank/photos
+  zfs get compression tank/photos
+  sudo zfs set compression=lz4 tank
+  zfs get -r -o name,property,value,source all tank
+  sudo zfs set quota=500G tank/backups
+  sudo zfs inherit compression tank/photos   # undo a local set
+
+SNAPSHOTS, CLONES, ROLLBACK (chapter 6)
+--------------------------------------------------------------------
+  sudo zfs snapshot tank/photos@before-import
+  sudo zfs snapshot -r tank@safety-net        # whole tree
+  zfs list -t snapshot
+  ls /tank/photos/.zfs/snapshot/              # look inside
+  sudo zfs rollback tank/photos@before-import
+  sudo zfs clone tank/vm@clean tank/vm-test
+  sudo zfs hold keep tank/photos@before-import
+  sudo zfs destroy tank/photos@before-import
+
+SEND AND RECEIVE (chapter 7)
+--------------------------------------------------------------------
+  sudo zfs send tank/photos@send1 \
+    | sudo zfs receive backup/photos
+  sudo zfs send -i tank/photos@send1 tank/photos@send2 \
+    | ssh you@other-server sudo zfs receive backup/photos
+  sudo zfs send -n -v tank/photos@send2       # dry run, sizes
+  sudo zfs bookmark tank/photos@send2 tank/photos#send2
+
+SCRUB, STATUS, REPLACE (chapter 8)
+--------------------------------------------------------------------
+  sudo zpool scrub tank
+  zpool status -x tank
+  sudo zpool clear tank                       # zero the counters
+  sudo zpool replace tank <old-disk-id> <new-disk-id>
+  zpool status tank                           # watch the resilver
+
+WATCHING (chapter 9)
+--------------------------------------------------------------------
+  zpool list                                  # CAP and FRAG
+  zpool events -v
+  zfs list -o space
+  zfs get usedbysnapshots tank/media
+  zpool iostat -v 5
+
+PORTABILITY (chapters 8 and 10)
+--------------------------------------------------------------------
+  sudo zpool export tank
+  sudo zpool import                           # what can be found
+  sudo zpool import tank

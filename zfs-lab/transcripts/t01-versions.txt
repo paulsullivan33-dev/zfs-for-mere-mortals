@@ -1,0 +1,12 @@
+$ zpool --version (extracted OpenZFS userspace, Ubuntu noble)
+zfs_version_kernel() failed: No such file or directory
+zfs-2.2.2-0ubuntu9.5
+
+$ zfs --version
+zfs_version_kernel() failed: No such file or directory
+zfs-2.2.2-0ubuntu9.5
+
+$ zpool version  (note: no module loaded yet)
+The ZFS modules cannot be auto-loaded.
+Try running 'modprobe zfs' as root to manually load them.
+exit=1
