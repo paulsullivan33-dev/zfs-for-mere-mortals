@@ -151,3 +151,19 @@ lab's transcripts live in
 `examples/lab-notes.txt`, and the pool
 plan worth copying is
 `examples/sample-pool-plan.txt`.
+
+---
+
+## Part of the series
+
+This guide is one of the [For Mere Mortals](https://paulsullivan33-dev.github.io/mere-mortals/) guides: plain-language guides to the tools programmers and makers use.
+
+Related guides:
+
+- [SnapRAID for Mere Mortals](https://paulsullivan33-dev.github.io/snapraid-for-mere-mortals/)
+- [Backups for Mere Mortals](https://paulsullivan33-dev.github.io/backups-for-mere-mortals/)
+- [Proxmox for Mere Mortals](https://paulsullivan33-dev.github.io/proxmox-for-mere-mortals/)
+
+## License
+
+The writing in this guide is licensed under [CC BY 4.0](https://github.com/paulsullivan33-dev/zfs-for-mere-mortals/blob/main/LICENSE). Code examples and lab scripts are licensed under the [MIT License](https://github.com/paulsullivan33-dev/zfs-for-mere-mortals/blob/main/LICENSE-CODE).

@@ -1,6 +1,7 @@
 site_name: ZFS for Mere Mortals
 site_description: Plain language storage that checks itself. Pools and vdevs, datasets and properties, snapshots you can roll back to, send and receive replication, scrubs that quietly repair damage, replacing a disk without drama, and the habits that keep a home server pool boring for years.
 site_url: https://paulsullivan33-dev.github.io/zfs-for-mere-mortals/
+copyright: 'Part of <a href="https://paulsullivan33-dev.github.io/mere-mortals/">For Mere Mortals</a> · Text <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, code MIT'
 
 # Guides live at the repo root (nice for GitHub browsing).
 # The deploy workflow copies them into docs/ before building.
